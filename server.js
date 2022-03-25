@@ -18,7 +18,14 @@ app.use(
   })
 );
 app.use(bodyParser.json({ limit: "50000000000000mb" }));
+
 app.use(cors());
+app.use((_, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  next();
+});
 app.use("/", homeRouter);
 app.use("/post", postRouter);
 app.use("/user", userRouter);

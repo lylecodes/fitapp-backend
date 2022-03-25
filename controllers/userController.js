@@ -35,6 +35,7 @@ exports.userCreatePost = (req, res) => {
 
     const name = req.body.name;
     const email = req.body.email;
+    const password = req.body.password; 
     const profilePic = req.body.profilePic;
     const stats = [{
         age: req.body.age,
@@ -47,6 +48,7 @@ exports.userCreatePost = (req, res) => {
     let newUser = {
         name,
         email,
+        password,
         profilePic,
         stats,
         dateCreated

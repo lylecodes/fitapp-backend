@@ -68,10 +68,9 @@ exports.postCreatePost = (req, res) => {
   const dateCreated = new Date(newDate);
   const uri = req.body.uri;
   const rawType = req.body.type;
-  console.log(uri);
   const type = rawType.split("/")[1];
+  const mediaName = aMediaName + type;
   console.log(type);
-  const mediaName = aMediaName + "." + type;
 
   let postItem = {
     // User,
@@ -81,11 +80,9 @@ exports.postCreatePost = (req, res) => {
     mediaName,
     dateCreated,
   };
-
-  console.log("postItem", postItem);
-  console.log(mediaName);
   try {
     saveFileToS3(mediaName, uri);
+    post.create(postItem);
     return res.send(postItem);
   } catch (err) {
     throw err;
