@@ -57,8 +57,6 @@ exports.postCreateGet = (req, res) => {
 // Create post on POST
 exports.postCreatePost = (req, res) => {
   const newDate = new Date();
-  // console.log(req.body);
-
   //   const User = mongoose.Types.ObjectId();
   const caption = req.body.caption;
   const comments = [];
@@ -68,12 +66,12 @@ exports.postCreatePost = (req, res) => {
     1
   )}`;
   const dateCreated = new Date(newDate);
-  // const blob = req.body.blob;
   const uri = req.body.uri;
+  const rawType = req.body.type;
   console.log(uri);
-  // console.log("blob from request body", blob);
-  // const type = blob.type;
-  const mediaName = aMediaName;
+  const type = rawType.split("/")[1];
+  console.log(type);
+  const mediaName = aMediaName + "." + type;
 
   let postItem = {
     // User,
@@ -86,12 +84,8 @@ exports.postCreatePost = (req, res) => {
 
   console.log("postItem", postItem);
   console.log(mediaName);
-  // console.log(blob.type);
   try {
     saveFileToS3(mediaName, uri);
-
-    // saveFileToS3.saveFileToS3();
-    // post.create(postItem);
     return res.send(postItem);
   } catch (err) {
     throw err;
